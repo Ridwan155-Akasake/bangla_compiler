@@ -1,0 +1,12 @@
+cd /c/Users/Ridwan\ Sharif/Documents/University_space/L4T1/Compiler\ Design/bangla_compiler
+bison -d -v ProjectParser.y  
+flex -v ProjectLexer.l  
+gcc lex.yy.c ProjectParser.tab.c -o bangla_compiler -L/usr/lib -lfl
+./bangla_compiler test_code.txt
+
+
+rerun
+rm lex.yy.c ProjectParser.tab.c ProjectParser.tab.h bangla
+bison -d ProjectParser.y
+flex ProjectLexer.l
+gcc lex.yy.c ProjectParser.tab.c -o bangla_compiler -lfl

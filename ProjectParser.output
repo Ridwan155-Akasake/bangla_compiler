@@ -1,0 +1,868 @@
+Terminals unused in grammar
+
+    UMINUS
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: statements
+
+    2 statements: statements statement
+    3           | statement
+
+    4 statement: datatype ID ';'
+    5          | PRINT ID ';'
+    6          | SCAN ID ';'
+    7          | ID '=' expression ';'
+    8          | IF comparison '{' statements '}' ELSE '{' statement '}'
+    9          | IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+   10 datatype: INT
+   11         | FLOAT
+   12         | DOUBLE
+   13         | STRING
+
+   14 expression: expression ADD expression
+   15           | expression SUB expression
+   16           | expression MUL expression
+   17           | expression DIV expression
+   18           | NUMBER
+   19           | FLOAT_NUMBER
+   20           | ID
+   21           | '(' expression ')'
+
+   22 comparison: expression EQ expression
+   23           | expression NEQ expression
+   24           | expression LT expression
+   25           | expression GT expression
+   26           | expression LE expression
+   27           | expression GE expression
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 21
+    ')' (41) 21
+    ';' (59) 4 5 6 7
+    '=' (61) 7
+    '{' (123) 8 9
+    '}' (125) 8 9
+    error (256)
+    UMINUS (258)
+    IF (259) 8 9
+    ELSE_IF (260) 9
+    ELSE (261) 8 9
+    PRINT (262) 5
+    SCAN (263) 6
+    INT (264) 10
+    FLOAT (265) 11
+    DOUBLE (266) 12
+    STRING (267) 13
+    EQ (268) 22
+    NEQ (269) 23
+    LT (270) 24
+    GT (271) 25
+    LE (272) 26
+    GE (273) 27
+    ID <str> (274) 4 5 6 7 20
+    NUMBER <num> (275) 18
+    FLOAT_NUMBER <fnum> (276) 19
+    ADD (277) 14
+    SUB (278) 15
+    MUL (279) 16
+    DIV (280) 17
+
+
+Nonterminals, with rules where they appear
+
+    $accept (32)
+        on left: 0
+    program (33)
+        on left: 1
+        on right: 0
+    statements (34)
+        on left: 2 3
+        on right: 1 2 8 9
+    statement (35)
+        on left: 4 5 6 7 8 9
+        on right: 2 3 8
+    datatype <type> (36)
+        on left: 10 11 12 13
+        on right: 4
+    expression <num> (37)
+        on left: 14 15 16 17 18 19 20 21
+        on right: 7 14 15 16 17 21 22 23 24 25 26 27
+    comparison <cmp> (38)
+        on left: 22 23 24 25 26 27
+        on right: 8 9
+
+
+State 0
+
+    0 $accept: • program $end
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    program     go to state 9
+    statements  go to state 10
+    statement   go to state 11
+    datatype    go to state 12
+
+
+State 1
+
+    8 statement: IF • comparison '{' statements '}' ELSE '{' statement '}'
+    9          | IF • comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 17
+    comparison  go to state 18
+
+
+State 2
+
+    5 statement: PRINT • ID ';'
+
+    ID  shift, and go to state 19
+
+
+State 3
+
+    6 statement: SCAN • ID ';'
+
+    ID  shift, and go to state 20
+
+
+State 4
+
+   10 datatype: INT •
+
+    $default  reduce using rule 10 (datatype)
+
+
+State 5
+
+   11 datatype: FLOAT •
+
+    $default  reduce using rule 11 (datatype)
+
+
+State 6
+
+   12 datatype: DOUBLE •
+
+    $default  reduce using rule 12 (datatype)
+
+
+State 7
+
+   13 datatype: STRING •
+
+    $default  reduce using rule 13 (datatype)
+
+
+State 8
+
+    7 statement: ID • '=' expression ';'
+
+    '='  shift, and go to state 21
+
+
+State 9
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 22
+
+
+State 10
+
+    1 program: statements •
+    2 statements: statements • statement
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    $default  reduce using rule 1 (program)
+
+    statement  go to state 23
+    datatype   go to state 12
+
+
+State 11
+
+    3 statements: statement •
+
+    $default  reduce using rule 3 (statements)
+
+
+State 12
+
+    4 statement: datatype • ID ';'
+
+    ID  shift, and go to state 24
+
+
+State 13
+
+   20 expression: ID •
+
+    $default  reduce using rule 20 (expression)
+
+
+State 14
+
+   18 expression: NUMBER •
+
+    $default  reduce using rule 18 (expression)
+
+
+State 15
+
+   19 expression: FLOAT_NUMBER •
+
+    $default  reduce using rule 19 (expression)
+
+
+State 16
+
+   21 expression: '(' • expression ')'
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 25
+
+
+State 17
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   22 comparison: expression • EQ expression
+   23           | expression • NEQ expression
+   24           | expression • LT expression
+   25           | expression • GT expression
+   26           | expression • LE expression
+   27           | expression • GE expression
+
+    EQ   shift, and go to state 26
+    NEQ  shift, and go to state 27
+    LT   shift, and go to state 28
+    GT   shift, and go to state 29
+    LE   shift, and go to state 30
+    GE   shift, and go to state 31
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+
+State 18
+
+    8 statement: IF comparison • '{' statements '}' ELSE '{' statement '}'
+    9          | IF comparison • '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+    '{'  shift, and go to state 36
+
+
+State 19
+
+    5 statement: PRINT ID • ';'
+
+    ';'  shift, and go to state 37
+
+
+State 20
+
+    6 statement: SCAN ID • ';'
+
+    ';'  shift, and go to state 38
+
+
+State 21
+
+    7 statement: ID '=' • expression ';'
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 39
+
+
+State 22
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 23
+
+    2 statements: statements statement •
+
+    $default  reduce using rule 2 (statements)
+
+
+State 24
+
+    4 statement: datatype ID • ';'
+
+    ';'  shift, and go to state 40
+
+
+State 25
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   21           | '(' expression • ')'
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+    ')'  shift, and go to state 41
+
+
+State 26
+
+   22 comparison: expression EQ • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 42
+
+
+State 27
+
+   23 comparison: expression NEQ • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 43
+
+
+State 28
+
+   24 comparison: expression LT • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 44
+
+
+State 29
+
+   25 comparison: expression GT • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 45
+
+
+State 30
+
+   26 comparison: expression LE • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 46
+
+
+State 31
+
+   27 comparison: expression GE • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 47
+
+
+State 32
+
+   14 expression: expression ADD • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 48
+
+
+State 33
+
+   15 expression: expression SUB • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 49
+
+
+State 34
+
+   16 expression: expression MUL • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 50
+
+
+State 35
+
+   17 expression: expression DIV • expression
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 51
+
+
+State 36
+
+    8 statement: IF comparison '{' • statements '}' ELSE '{' statement '}'
+    9          | IF comparison '{' • statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    statements  go to state 52
+    statement   go to state 11
+    datatype    go to state 12
+
+
+State 37
+
+    5 statement: PRINT ID ';' •
+
+    $default  reduce using rule 5 (statement)
+
+
+State 38
+
+    6 statement: SCAN ID ';' •
+
+    $default  reduce using rule 6 (statement)
+
+
+State 39
+
+    7 statement: ID '=' expression • ';'
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+    ';'  shift, and go to state 53
+
+
+State 40
+
+    4 statement: datatype ID ';' •
+
+    $default  reduce using rule 4 (statement)
+
+
+State 41
+
+   21 expression: '(' expression ')' •
+
+    $default  reduce using rule 21 (expression)
+
+
+State 42
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   22 comparison: expression EQ expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 22 (comparison)
+
+
+State 43
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   23 comparison: expression NEQ expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 23 (comparison)
+
+
+State 44
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   24 comparison: expression LT expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 24 (comparison)
+
+
+State 45
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   25 comparison: expression GT expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 25 (comparison)
+
+
+State 46
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   26 comparison: expression LE expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 26 (comparison)
+
+
+State 47
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   27 comparison: expression GE expression •
+
+    ADD  shift, and go to state 32
+    SUB  shift, and go to state 33
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 27 (comparison)
+
+
+State 48
+
+   14 expression: expression • ADD expression
+   14           | expression ADD expression •
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 14 (expression)
+
+
+State 49
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   15           | expression SUB expression •
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+
+    MUL  shift, and go to state 34
+    DIV  shift, and go to state 35
+
+    $default  reduce using rule 15 (expression)
+
+
+State 50
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   16           | expression MUL expression •
+   17           | expression • DIV expression
+
+    $default  reduce using rule 16 (expression)
+
+
+State 51
+
+   14 expression: expression • ADD expression
+   15           | expression • SUB expression
+   16           | expression • MUL expression
+   17           | expression • DIV expression
+   17           | expression DIV expression •
+
+    $default  reduce using rule 17 (expression)
+
+
+State 52
+
+    2 statements: statements • statement
+    8 statement: IF comparison '{' statements • '}' ELSE '{' statement '}'
+    9          | IF comparison '{' statements • '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+    '}'     shift, and go to state 54
+
+    statement  go to state 23
+    datatype   go to state 12
+
+
+State 53
+
+    7 statement: ID '=' expression ';' •
+
+    $default  reduce using rule 7 (statement)
+
+
+State 54
+
+    8 statement: IF comparison '{' statements '}' • ELSE '{' statement '}'
+    9          | IF comparison '{' statements '}' • ELSE_IF comparison '{' statements '}' ELSE '{' statements '}'
+
+    ELSE_IF  shift, and go to state 55
+    ELSE     shift, and go to state 56
+
+
+State 55
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF • comparison '{' statements '}' ELSE '{' statements '}'
+
+    ID            shift, and go to state 13
+    NUMBER        shift, and go to state 14
+    FLOAT_NUMBER  shift, and go to state 15
+    '('           shift, and go to state 16
+
+    expression  go to state 17
+    comparison  go to state 57
+
+
+State 56
+
+    8 statement: IF comparison '{' statements '}' ELSE • '{' statement '}'
+
+    '{'  shift, and go to state 58
+
+
+State 57
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison • '{' statements '}' ELSE '{' statements '}'
+
+    '{'  shift, and go to state 59
+
+
+State 58
+
+    8 statement: IF comparison '{' statements '}' ELSE '{' • statement '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    statement  go to state 60
+    datatype   go to state 12
+
+
+State 59
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' • statements '}' ELSE '{' statements '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    statements  go to state 61
+    statement   go to state 11
+    datatype    go to state 12
+
+
+State 60
+
+    8 statement: IF comparison '{' statements '}' ELSE '{' statement • '}'
+
+    '}'  shift, and go to state 62
+
+
+State 61
+
+    2 statements: statements • statement
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements • '}' ELSE '{' statements '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+    '}'     shift, and go to state 63
+
+    statement  go to state 23
+    datatype   go to state 12
+
+
+State 62
+
+    8 statement: IF comparison '{' statements '}' ELSE '{' statement '}' •
+
+    $default  reduce using rule 8 (statement)
+
+
+State 63
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' • ELSE '{' statements '}'
+
+    ELSE  shift, and go to state 64
+
+
+State 64
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE • '{' statements '}'
+
+    '{'  shift, and go to state 65
+
+
+State 65
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' • statements '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+
+    statements  go to state 66
+    statement   go to state 11
+    datatype    go to state 12
+
+
+State 66
+
+    2 statements: statements • statement
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements • '}'
+
+    IF      shift, and go to state 1
+    PRINT   shift, and go to state 2
+    SCAN    shift, and go to state 3
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    DOUBLE  shift, and go to state 6
+    STRING  shift, and go to state 7
+    ID      shift, and go to state 8
+    '}'     shift, and go to state 67
+
+    statement  go to state 23
+    datatype   go to state 12
+
+
+State 67
+
+    9 statement: IF comparison '{' statements '}' ELSE_IF comparison '{' statements '}' ELSE '{' statements '}' •
+
+    $default  reduce using rule 9 (statement)
